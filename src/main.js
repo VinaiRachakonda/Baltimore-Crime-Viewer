@@ -7,6 +7,11 @@ Vue.component('v-tilelayer', Vue2Leaflet.TileLayer);
 Vue.component('v-marker', Vue2Leaflet.Marker);
 Vue.component('v-polygon', Vue2Leaflet.Polygon);
 Vue.component('v-geojson', Vue2Leaflet.GeoJSON);
+Vue.component('v-group', Vue2Leaflet.LayerGroup);
+Vue.component('v-popup', Vue2Leaflet.Popup);
+Vue.component('v-tooltip', Vue2Leaflet.Tooltip);
+
+
 
 
 new Vue({
