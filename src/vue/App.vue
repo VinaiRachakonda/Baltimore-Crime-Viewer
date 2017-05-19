@@ -1,12 +1,20 @@
 <template>
-    <test></test>
+    <div class="row">
+        <div class="col-md-8">
+            <test></test>
+        </div>
+        <div class="col-md-4">
+            <filters></filters>
+        </div>
+    </div>
 </template>
 
 <script>
   import Test from './test.vue'
+  import Filters from './filters.vue'
   export default {
     name: 'app',
-    components: {Test},
+    components: {Test, Filters},
     data () {
       return {
         msg: 'Welcome to Your Vue.js App'

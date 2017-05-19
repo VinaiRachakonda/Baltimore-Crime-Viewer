@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './vue/App.vue'
 import Vue2Leaflet from '../node_modules/vue2-leaflet'
+import BootstrapVue from 'bootstrap-vue';
+
+Vue.use(BootstrapVue);
 
 Vue.component('v-map', Vue2Leaflet.Map);
 Vue.component('v-tilelayer', Vue2Leaflet.TileLayer);
