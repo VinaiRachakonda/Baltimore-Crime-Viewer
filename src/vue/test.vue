@@ -6,7 +6,7 @@
                        v-on:l-click="click()" :id="item.name">
                 <v-popup :content="item.name"></v-popup>
             </v-polygon>
-            <v-marker v-for="item in arrests" :key="item.arrests" :lat-lng="item.latlngs">
+            <v-marker v-for="item in arrests" v-if="item.visible" :key="item.arrests"  :lat-lng="item.latlngs">
                 <v-tooltip :content="item.arrest"></v-tooltip>
             </v-marker>
             <v-geojson :geojson="polygons"></v-geojson>
@@ -17,16 +17,21 @@
 
 <script>
   import axios from 'axios';
-
+  import {EventBus} from '.././event-bus.js';
   export default {
     name: 'test',
+    created() {
+      EventBus.$on('neighborhood:change',  response => {
+        this.updateNeighborhood(response);
+      });
+    },
     data() {
       return {
         center: [39.299236, -76.609383],
         marker: [39.299236, -76.609383],
         lat: 39.299236,
         lng: -76.609383,
-        zoom: 12,
+        zoom: 12.5,
         minZoom: 8,
         maxZoom: 15,
         url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -72,10 +77,25 @@
             const curr = response.data[j];
             if (curr.hasOwnProperty('location_1')) {
               curr.latlngs = [curr.location_1.latitude, curr.location_1.longitude];
+              curr.visible = true;
+              curr.neighborhood = curr.name1;
+              this.arrests.push(curr); //remember to change
             }
-            this.arrests.push(curr);
+
           }
         })
+      },
+      updateNeighborhood(choice) {
+        for (let i = 0; i < this.arrests.length; i++) {
+          //verbosity on purpose
+          if (this.arrests[i].neighborhood === choice) {
+            console.log('here');
+            this.arrests[i].visible = true;
+          } else {
+            this.arrests[i].visible = false;
+          }
+        }
+
       }
     },
     mounted: function () {

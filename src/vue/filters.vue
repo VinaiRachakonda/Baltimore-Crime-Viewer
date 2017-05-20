@@ -1,20 +1,22 @@
 <template lang="html">
     <div id=filters>
         <p>Filter by Neighborhood</p>
-        <b-form-select v-model="selected"
+        <b-form-select v-model="selected" @update:selected="click();"
                        :options="Noptions"
                        class="mb-3">
         </b-form-select>
         <p>Filter by Time Span</p>
         <b-form-select
-                       :options="TimeSpan"
-                       class="mb-3">
+                :options="TimeSpan"
+                class="mb-3">
         </b-form-select>
         <p>Filter by Crime Type</p>
     </div>
 </template>
 
 <script>
+  import {EventBus} from '.././event-bus.js';
+
   export default {
     name: 'filters',
     data()  {
@@ -32,8 +34,10 @@
           {text: 'Armistead Gardens', value: 'Armistead Gardens'},
           {text: 'Ashburton', value: 'Ashburton'},
           {text: 'Baltimore Highlands', value: 'Baltimore Highlands'},
-          {text: 'Patterson Park Neighborhood',
-            value: 'Patterson Park Neighborhood'},
+          {
+            text: 'Patterson Park Neighborhood',
+            value: 'Patterson Park Neighborhood'
+          },
           {text: 'Barclay', value: 'Barclay'},
           {text: 'Barre Circle', value: 'Barre Circle'},
           {text: 'Beechfield', value: 'Beechfield'},
@@ -53,12 +57,14 @@
           {text: 'Brooklyn', value: 'Brooklyn'},
           {text: 'Burleith-Leighton', value: 'Burleith-Leighton'},
           {text: "Butcher's Hill", value: "Butcher's Hill"},
-            {text: 'Callaway-Garrison', value: 'Callaway-Garrison'},
+          {text: 'Callaway-Garrison', value: 'Callaway-Garrison'},
           {text: 'Cameron Village', value: 'Cameron Village'},
           {text: 'Canton', value: 'Canton'},
           {text: 'Canton Industrial Area', value: 'Canton Industrial Area'},
-          {text: 'Carroll - Camden Industrial Area',
-            value: 'Carroll - Camden Industrial Area'},
+          {
+            text: 'Carroll - Camden Industrial Area',
+            value: 'Carroll - Camden Industrial Area'
+          },
           {text: 'Carroll Park', value: 'Carroll Park'},
           {text: 'Carroll-South Hilton', value: 'Carroll-South Hilton'},
           {text: 'Carrollton Ridge', value: 'Carrollton Ridge'},
@@ -74,10 +80,14 @@
           {text: 'Orchard Ridge', value: 'Orchard Ridge'},
           {text: 'Clifton Park', value: 'Clifton Park'},
           {text: 'Coldspring', value: 'Coldspring'},
-          {text: 'Coldstream Homestead Montebello',
-            value: 'Coldstream Homestead Montebello'},
-          {text: 'Concerned Citizens Of Forest Park',
-            value: 'Concerned Citizens Of Forest Park'},
+          {
+            text: 'Coldstream Homestead Montebello',
+            value: 'Coldstream Homestead Montebello'
+          },
+          {
+            text: 'Concerned Citizens Of Forest Park',
+            value: 'Concerned Citizens Of Forest Park'
+          },
           {text: 'Coppin Heights/Ash-Co-East', value: 'Coppin Heights/Ash-Co-East'},
           {text: 'Cross Country', value: 'Cross Country'},
           {text: 'Cross Keys', value: 'Cross Keys'},
@@ -165,8 +175,10 @@
           {text: 'Little Italy', value: 'Little Italy'},
           {text: 'Loch Raven', value: 'Loch Raven'},
           {text: 'Locust Point', value: 'Locust Point'},
-          {text: 'Locust Point Industrial Area',
-            value: 'Locust Point Industrial Area'},
+          {
+            text: 'Locust Point Industrial Area',
+            value: 'Locust Point Industrial Area'
+          },
           {text: 'Lower Herring Run Park', value: 'Lower Herring Run Park'},
           {text: 'Loyola/Notre Dame', value: 'Loyola/Notre Dame'},
           {text: 'Lucille Park', value: 'Lucille Park'},
@@ -178,8 +190,10 @@
           {text: 'Medford', value: 'Medford'},
           {text: 'Mid-Govans', value: 'Mid-Govans'},
           {text: 'Mid-Town Belvedere', value: 'Mid-Town Belvedere'},
-          {text: 'Middle Branch/Reedbird Parks',
-            value: 'Middle Branch/Reedbird Parks'},
+          {
+            text: 'Middle Branch/Reedbird Parks',
+            value: 'Middle Branch/Reedbird Parks'
+          },
           {text: 'Middle East', value: 'Middle East'},
           {text: 'Midtown-Edmondson', value: 'Midtown-Edmondson'},
           {text: 'Millhill', value: 'Millhill'},
@@ -199,17 +213,21 @@
           {text: 'Mt Pleasant Park', value: 'Mt Pleasant Park'},
           {text: 'New Northwood', value: 'New Northwood'},
           {text: 'North Harford Road', value: 'North Harford Road'},
-          {text: 'North Roland Park/Poplar Hill',
-            value: 'North Roland Park/Poplar Hill'},
+          {
+            text: 'North Roland Park/Poplar Hill',
+            value: 'North Roland Park/Poplar Hill'
+          },
           {text: 'Northwest Community Action', value: 'Northwest Community Action'},
           {text: "O'Donnell Heights", value: "O'Donnell Heights"},
-            {text: 'Oakenshawe', value: 'Oakenshawe'},
+          {text: 'Oakenshawe', value: 'Oakenshawe'},
           {text: 'Oaklee', value: 'Oaklee'},
           {text: 'Oldtown', value: 'Oldtown'},
           {text: 'Oliver', value: 'Oliver'},
           {text: 'Orangeville', value: 'Orangeville'},
-          {text: 'Orangeville Industrial Area',
-            value: 'Orangeville Industrial Area'},
+          {
+            text: 'Orangeville Industrial Area',
+            value: 'Orangeville Industrial Area'
+          },
           {text: 'Original Northwood', value: 'Original Northwood'},
           {text: 'Otterbein', value: 'Otterbein'},
           {text: 'Overlea', value: 'Overlea'},
@@ -223,8 +241,10 @@
           {text: 'Pen Lucy', value: 'Pen Lucy'},
           {text: 'Penn North', value: 'Penn North'},
           {text: 'Penn-Fallsway', value: 'Penn-Fallsway'},
-          {text: 'Penrose/Fayette Street Outreach',
-            value: 'Penrose/Fayette Street Outreach'},
+          {
+            text: 'Penrose/Fayette Street Outreach',
+            value: 'Penrose/Fayette Street Outreach'
+          },
           {text: 'Perkins Homes', value: 'Perkins Homes'},
           {text: 'Perring Loch', value: 'Perring Loch'},
           {text: 'Pimlico Good Neighbors', value: 'Pimlico Good Neighbors'},
@@ -240,14 +260,16 @@
           {text: 'Reservoir Hill', value: 'Reservoir Hill'},
           {text: 'Richnor Springs', value: 'Richnor Springs'},
           {text: "Ridgely's Delight", value: "Ridgely's Delight"},
-            {text: 'Riverside', value: 'Riverside'},
+          {text: 'Riverside', value: 'Riverside'},
           {text: 'Rognel Heights', value: 'Rognel Heights'},
           {text: 'Roland Park', value: 'Roland Park'},
           {text: 'Rosebank', value: 'Rosebank'},
           {text: 'Rosemont', value: 'Rosemont'},
           {text: 'Rosemont East', value: 'Rosemont East'},
-          {text: 'Rosemont Homeowners/Tenants',
-            value: 'Rosemont Homeowners/Tenants'},
+          {
+            text: 'Rosemont Homeowners/Tenants',
+            value: 'Rosemont Homeowners/Tenants'
+          },
           {text: 'Sabina-Mattfeldt', value: 'Sabina-Mattfeldt'},
           {text: 'Saint Agnes', value: 'Saint Agnes'},
           {text: 'Saint Helena', value: 'Saint Helena'},
@@ -260,8 +282,10 @@
           {text: 'Sharp-Leadenhall', value: 'Sharp-Leadenhall'},
           {text: 'Shipley Hill', value: 'Shipley Hill'},
           {text: 'South Clifton Park', value: 'South Clifton Park'},
-          {text: 'Spring Garden Industrial Area',
-            value: 'Spring Garden Industrial Area'},
+          {
+            text: 'Spring Garden Industrial Area',
+            value: 'Spring Garden Industrial Area'
+          },
           {text: 'Stadium Area', value: 'Stadium Area'},
           {text: 'Stonewood-Pentwood-Winston', value: 'Stonewood-Pentwood-Winston'},
           {text: 'Taylor Heights', value: 'Taylor Heights'},
@@ -316,18 +340,29 @@
         TimeSpan: [{
           text: 'full-time',
           value: 'full-time'
-        },{
+        }, {
           text: 'one week',
           value: 'one week'
-        },{
-          text: 'two weeks',
-          value: 'two weeks'
-        },{
-          text: 'three weeks',
-          value: 'three weeks'
         },
-        ]
-      };
+          {
+            text: 'two weeks',
+            value: 'two weeks'
+          }, {
+            text: 'three weeks',
+            value: 'three weeks'
+          }],
+      }
+    },
+    methods: {
+      click() {
+        console.log("Yo!");
+      }
+    },
+    watch: {
+      selected() {
+        console.log(this.selected);
+        EventBus.$emit('neighborhood:change', this.selected);
+      }
     }
 
   }
