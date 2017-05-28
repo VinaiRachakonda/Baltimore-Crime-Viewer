@@ -5,6 +5,7 @@
         </div>
         <div class="col-md-4">
             <filters></filters>
+            <stats></stats>
         </div>
     </div>
 </template>
@@ -12,9 +13,10 @@
 <script>
   import Test from './test.vue'
   import Filters from './filters.vue'
+  import Stats from './Stats.vue'
   export default {
     name: 'app',
-    components: {Test, Filters},
+    components: {Test, Filters, Stats},
     data () {
       return {
         msg: 'Welcome to Your Vue.js App',

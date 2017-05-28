@@ -2,14 +2,13 @@
     <div class="full">
         <v-map id="myMap" :zoom="zoom" :center="center">
             <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
-            <v-polygon v-for="item in polygons" :key="item.coordinates" :lat-lngs="item.latlngs" :color="item.color"
-                       v-on:l-click="click()" :id="item.name">
+            <v-polygon v-for="item in polygons" :key="item.name" v-on:l-click = "selectedPolygon(item.name)" :lat-lngs="item.latlngs" :color="item.color"
+                       :id="item.name" >
                 <v-popup :content="item.name"></v-popup>
             </v-polygon>
-            <v-marker v-for="item in arrests" v-if="item.visible" :key="item.arrests"  :lat-lng="item.latlngs">
+            <v-marker  v-for="item in arrests" v-on:l-move="click()" v-if="item.visible" :key="item.arrests" :lat-lng="item.latlngs">
                 <v-tooltip :content="item.arrest"></v-tooltip>
             </v-marker>
-            <v-geojson :geojson="polygons"></v-geojson>
         </v-map>
     </div>
 
@@ -21,17 +20,22 @@
   export default {
     name: 'test',
     created() {
-      EventBus.$on('neighborhood:change',  response => {
+      EventBus.$on('neighborhood:change', response => {
+        this.currentNeighborhood = response;
         this.updateNeighborhood(response);
+      });
+      EventBus.$on('time:change', response => {
+        console.log('AyyLmao');
+      });
+      EventBus.$on('district:change', response => {
+        this.currentDistrict = response;
+        this.updateDistrict(response);
       });
     },
     data() {
       return {
         center: [39.299236, -76.609383],
-        marker: [39.299236, -76.609383],
-        lat: 39.299236,
-        lng: -76.609383,
-        zoom: 12.5,
+        zoom: 12,
         minZoom: 8,
         maxZoom: 15,
         url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -42,6 +46,8 @@
         attributionControl: false,
         polygons: [],
         arrests: [],
+        currentDistrict: 'All',
+        currentNeighborhood: 'All'
       };
     },
     methods: {
@@ -87,15 +93,21 @@
       },
       updateNeighborhood(choice) {
         for (let i = 0; i < this.arrests.length; i++) {
-          //verbosity on purpose
-          if (this.arrests[i].neighborhood === choice) {
-            console.log('here');
+          if (this.arrests[i].neighborhood === choice && this.arrests[i].district === this.currentDistrict) {
             this.arrests[i].visible = true;
           } else {
             this.arrests[i].visible = false;
           }
         }
-
+      },
+      updateDistrict(choice) {
+        for (let i = 0; i < this.arrests.length; i++) {
+            this.arrest[i].visible = this.arrests[i].neighborhood === this.currentNeighborhood && this.arrests[i].district === choice;
+        }
+      },
+      selectedPolygon(choice) {
+        //update stats whenever polygon is chosen
+        EventBus.$emit('polygon:selected', choice);
       }
     },
     mounted: function () {

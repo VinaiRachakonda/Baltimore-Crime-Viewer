@@ -1,16 +1,20 @@
 <template lang="html">
     <div id=filters>
+        <p>Filter by District</p>
+        <b-form-select v-model="districtChoice"
+                       :options="Districts"
+                       class="mb-3">
+        </b-form-select>
         <p>Filter by Neighborhood</p>
-        <b-form-select v-model="selected" @update:selected="click();"
+        <b-form-select v-model="selected"
                        :options="Noptions"
                        class="mb-3">
         </b-form-select>
-        <p>Filter by Time Span</p>
-        <b-form-select
-                :options="TimeSpan"
-                class="mb-3">
-        </b-form-select>
-        <p>Filter by Crime Type</p>
+        <!--<p>Filter by Time Span</p>-->
+        <!--<b-form-select v-model="timeChoice"-->
+                <!--:options="TimeSpan"-->
+                <!--class="mb-3">-->
+        <!--</b-form-select>-->
     </div>
 </template>
 
@@ -22,6 +26,8 @@
     data()  {
       return {
         selected: 'Abell',
+        timeChoice:'full-time',
+        districtChoice: 'Northwest',
         Noptions: [
           {
             text: 'All',
@@ -351,17 +357,33 @@
             text: 'three weeks',
             value: 'three weeks'
           }],
+        Districts: [
+          {text: 'Northwest', value: 'Northwest'},
+          {text: 'North', value: 'North'},
+          {text: 'Northeastern', value: 'Northeastern'},
+          {text: 'West', value: 'West'},
+          {text: 'Central', value: 'Central'},
+          {text: 'East', value: 'East'},
+          {text: 'Southwestern', value: 'Southwestern'},
+          {text: 'Southern', value: 'Southern'},
+          {text: 'Southeastern', value: 'Southeastern'},
+        ]
       }
     },
     methods: {
-      click() {
-        console.log("Yo!");
-      }
     },
     watch: {
       selected() {
         console.log(this.selected);
         EventBus.$emit('neighborhood:change', this.selected);
+      },
+      timeChoice() {
+        console.log(this.timeChoice);
+        EventBus.$emit('time:change', this.timeChoice);
+      },
+      districtChoice() {
+        console.log(this.districtChoice);
+        EventBus.$emit('district:change', this.districtChoice);
       }
     }
 
