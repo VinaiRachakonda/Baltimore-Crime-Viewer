@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="full">
-        <v-map id="myMap" :zoom="zoom" :center="center">
+        <v-map id="myMap" :zoom="zoom" :center="center" style="width: inherit; height: 550px">
             <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
             <v-polygon v-for="item in polygons" :key="item.name" v-on:l-click = "selectedPolygon(item.name)" :lat-lngs="item.latlngs" :color="item.color"
                        :id="item.name" >
@@ -34,7 +34,7 @@
     },
     data() {
       return {
-        center: [39.299236, -76.609383],
+        center: [39.299236, -76.609384], //used to be  -76.609383
         zoom: 12,
         minZoom: 8,
         maxZoom: 15,
@@ -121,7 +121,10 @@
     @import '../../node_modules/leaflet/dist/leaflet.css';
 
     .full {
-        width: 800px;
-        height: 800px;
+        width: 100%;
+        height: 100%;
     }
+
+</style>
+
 </style>

@@ -1,20 +1,28 @@
 <template lang="html">
     <div id=filters>
-        <p>Filter by District</p>
-        <b-form-select v-model="districtChoice"
-                       :options="Districts"
-                       class="mb-3">
-        </b-form-select>
-        <p>Filter by Neighborhood</p>
-        <b-form-select v-model="selected"
-                       :options="Noptions"
-                       class="mb-3">
-        </b-form-select>
-        <!--<p>Filter by Time Span</p>-->
-        <!--<b-form-select v-model="timeChoice"-->
-                <!--:options="TimeSpan"-->
-                <!--class="mb-3">-->
-        <!--</b-form-select>-->
+        <div class="row">
+            <ul>
+                <li>
+                    <b-form-select v-model="districtChoice"
+                                   :options="Districts"
+                                   class="mb-3">
+                    </b-form-select>
+                </li>
+                <li>
+
+                    <b-form-select v-model="selected"
+                                   :options="Noptions"
+                                   class="mb-3">
+                    </b-form-select>
+                </li>
+                <li>
+                    <b-form-select v-model="timeChoice"
+                                   :options="TimeSpan"
+                                   class="mb-3">
+                    </b-form-select>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -25,13 +33,13 @@
     name: 'filters',
     data()  {
       return {
-        selected: 'Abell',
-        timeChoice:'full-time',
-        districtChoice: 'Northwest',
+        selected: null,
+        timeChoice: null,
+        districtChoice: null,
         Noptions: [
           {
-            text: 'All',
-            value: 'all'
+            text: 'Neighborhood',
+            value: null
           },
           {text: 'Abell', value: 'Abell'},
           {text: 'Allendale', value: 'Allendale'},
@@ -343,13 +351,19 @@
           {text: 'Four By Four', value: 'Four By Four'},
           {text: 'Charles Village', value: 'Charles Village'},
           {text: 'Old Goucher', value: 'Old Goucher'},],
-        TimeSpan: [{
-          text: 'full-time',
-          value: 'full-time'
-        }, {
-          text: 'one week',
-          value: 'one week'
-        },
+        TimeSpan: [
+          {
+            text: 'Time',
+            value: null
+          },
+          {
+            text: 'full-time',
+            value: 'full-time'
+          },
+          {
+            text: 'one week',
+            value: 'one week'
+          },
           {
             text: 'two weeks',
             value: 'two weeks'
@@ -358,6 +372,7 @@
             value: 'three weeks'
           }],
         Districts: [
+          {text: 'District', value: null},
           {text: 'Northwest', value: 'Northwest'},
           {text: 'North', value: 'North'},
           {text: 'Northeastern', value: 'Northeastern'},
@@ -370,8 +385,7 @@
         ]
       }
     },
-    methods: {
-    },
+    methods: {},
     watch: {
       selected() {
         console.log(this.selected);
@@ -391,5 +405,12 @@
 </script>
 
 <style>
+    ul {
+        align-content: center;
+    }
+
+    li {
+        display: inline;
+    }
 
 </style>
